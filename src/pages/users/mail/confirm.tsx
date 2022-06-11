@@ -1,57 +1,45 @@
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { useEffect, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
 import Image from 'next/image';
+import { Spinner } from '@chakra-ui/react';
+import { Text, Stack } from '@chakra-ui/react';
+import { Container } from '@chakra-ui/react';
+import { useConfirm } from '../../../hooks/confirm';
+import { useCommon } from '../../../hooks/common';
 
-export default function App(props) {
+export default function App() {
+  const { isLoading } = useCommon();
+  const { confirmMail } = useConfirm();
   const router = useRouter();
   const { token } = router.query;
-
+  const [subtitle, setSubtitle] = useState('Confirming...');
   useEffect(() => {
     if (!router.isReady) return;
-    console.log('token');
-    console.log(token);
+    confirmMail(token).then(value => {
+      value
+        ? setSubtitle('Cadastro ativado com sucesso!')
+        : setSubtitle('Falha ao ativar cadastro!');
+    });
   }, [router.isReady]);
-  return (
-    <View style={styles.container}>
-      <Text accessibilityRole="header" style={styles.text}>
-        React Native for Web & Next.js
-      </Text>
-      <Image
-        src="/images/logo-title-3.png"
-        alt="Picture of rose"
-        width="350px"
-        height="300px"
-      />
-      <Text style={styles.link} accessibilityRole="link" href="/alternate">
-        A universal link
-      </Text>
 
-      <View style={styles.textContainer}>
-        <Text accessibilityRole="header" aria-level="2" style={styles.text}>
-          Subheader
+  if (isLoading) {
+    <Spinner />;
+  }
+
+  return (
+    <Container>
+      <Stack align="between">
+        <Text fontSize="6xl" align="center">
+          {subtitle}
         </Text>
-      </View>
-    </View>
+        <Image
+          src="/images/logo-title-3.png"
+          alt="Picture of rose"
+          width="350px"
+          height="300px"
+        />
+      </Stack>
+    </Container>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    flexGrow: 1,
-    justifyContent: 'center',
-  },
-  link: {
-    color: 'blue',
-  },
-  textContainer: {
-    alignItems: 'center',
-    marginTop: 16,
-  },
-  text: {
-    alignItems: 'center',
-    fontSize: 24,
-    marginBottom: 24,
-  },
-});
