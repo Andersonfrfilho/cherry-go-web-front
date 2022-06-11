@@ -1,13 +1,29 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import Image from 'next/image';
 
 export default function App(props) {
+  const router = useRouter();
+  const { token } = router.query;
+
+  useEffect(() => {
+    if (!router.isReady) return;
+    console.log('token');
+    console.log(token);
+  }, [router.isReady]);
   return (
     <View style={styles.container}>
       <Text accessibilityRole="header" style={styles.text}>
         React Native for Web & Next.js
       </Text>
-
-      <Text style={styles.link} accessibilityRole="link" href={`/alternate`}>
+      <Image
+        src="/images/logo-title-3.png"
+        alt="Picture of rose"
+        width="350px"
+        height="300px"
+      />
+      <Text style={styles.link} accessibilityRole="link" href="/alternate">
         A universal link
       </Text>
 
@@ -17,7 +33,7 @@ export default function App(props) {
         </Text>
       </View>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -38,4 +54,4 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginBottom: 24,
   },
-})
+});
