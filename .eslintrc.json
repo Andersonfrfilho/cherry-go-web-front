@@ -13,7 +13,8 @@
     "plugin:testing-library/react",
     "plugin:jest-dom/recommended",
     "plugin:prettier/recommended",
-    "plugin:json/recommended"
+    "plugin:json/recommended",
+    "next/core-web-vitals"
   ],
   "globals": {
     "React": "readonly"

@@ -6,6 +6,8 @@ type CommonContextData = {
   setIsLoading: Dispatch<SetStateAction<boolean>>;
   isLoadingRouter: boolean;
   setIsLoadingRouter: Dispatch<SetStateAction<boolean>>;
+  isError: boolean; 
+  setIsError: Dispatch<SetStateAction<boolean>>;
 };
 
 interface CommonProviderProps {
@@ -17,10 +19,11 @@ const CommonContext = createContext<CommonContextData>({} as CommonContextData);
 function CommonProvider({ children }: CommonProviderProps) {
   const [isLoadingRouter, setIsLoadingRouter] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
 
   return (
     <CommonContext.Provider
-      value={{ isLoading, setIsLoading, isLoadingRouter, setIsLoadingRouter }}
+      value={{ isLoading, setIsLoading, isLoadingRouter, setIsLoadingRouter,isError, setIsError }}
     >
       {children}
     </CommonContext.Provider>
