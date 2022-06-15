@@ -1,12 +1,9 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { Spinner } from '@chakra-ui/react';
-import { Text, Stack } from '@chakra-ui/react';
-import { Container } from '@chakra-ui/react';
+import { Container, Text, Stack, Spinner } from '@chakra-ui/react';
 import { useConfirm } from '../../../hooks/confirm';
 import { useCommon } from '../../../hooks/common';
-import { theme } from '../../../styles/theme';
 
 export default function App() {
   const { isLoading, setIsError, isError } = useCommon();
@@ -26,7 +23,7 @@ export default function App() {
   useEffect(() => {
     
     if (!router.isReady) return;
-    confirmMail(token).then(value => {
+    !!token && confirmMail(String(token)).then(value => {
       value
         ? setSubtitle('Cadastro ativado com sucesso!')
         : setSubtitle('Falha ao ativar cadastro tente novamente no app!');
