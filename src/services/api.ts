@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://staging.cherry-go.com',
+  baseURL: 'https://staging.api.cherry-go.com',
 });
 
 export { api };
